@@ -1,7 +1,11 @@
 import { Router } from 'express'
+import { customersRoutes } from '../modules/customers/customer.routes';
+import { serviceOrdersRoutes } from '../modules/serviceOrders/serviceOrder.routes';
 
 const routes = Router()
 
-routes.get('/health', (req, res) => res.json({ status: 'ok' }))
+routes.get('/teste', (req, res) => res.json({ status: 'ok' }))
+routes.use('/customers', customersRoutes)
+routes.use('/service-orders', serviceOrdersRoutes)
 
 export { routes }
