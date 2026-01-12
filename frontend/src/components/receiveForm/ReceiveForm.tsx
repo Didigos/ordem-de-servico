@@ -13,7 +13,7 @@ type TypeForm = {
 
 const ReceiveForm = () => {
 
-    const { register, handleSubmit, formState: { errors }, control } = useForm<TypeForm>();
+    const { register, control } = useForm<TypeForm>();
 
     const handleInputs = useWatch({
         control,
