@@ -10,6 +10,9 @@ const ServiceOrderSchema = new Schema(
       index: true,
     },
 
+    //loja ou funcionário que recebeu a OS
+    store: { type: String, required: true, trim: true },
+
     // relacionamento
     customerId: {
       type: Schema.Types.ObjectId,

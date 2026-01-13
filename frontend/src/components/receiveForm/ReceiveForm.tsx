@@ -14,20 +14,21 @@ type TypeForm = {
 
 const ReceiveForm = () => {
 
-    const { register, control } = useForm<TypeForm>();
+    const { register} = useForm<TypeForm>();
 
-    const handleInputs = useWatch({
-        control,
-        name: "client"
-    });
-
-    console.log(handleInputs);
+        const handleBackClick = () =>{
+        window.history.back();
+        }
+    
 
     return (
         <main className="sm:w-screen sm:full p-4 flex flex-col items-center justify-center">
             <header className="w-full flex items-center justify-center p-4 flex-col">
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
+                <button 
+                onClick={handleBackClick}
+                className="p-2 bg-blue-400 rounded-2xl mt-5">Voltar página anterior</button>
             </header>
 
             <form className="flex items-center justify-center flex-col gap-2 p-4 w-full">
