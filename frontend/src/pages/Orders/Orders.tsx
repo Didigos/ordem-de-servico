@@ -1,5 +1,10 @@
 
 const Orders = () => {
+
+    const handleBackClick = () => {
+        window.history.back();
+    }
+
     return (
         <main className="w-full border h-screen">
             <header className="flex flex-col gap-4 justify-center items-center">
@@ -8,11 +13,15 @@ const Orders = () => {
                     Ao entregar o aparelho, certifique-se de que todas as informações estão corretas
                     e que o cliente está ciente dos termos de entrega.
                 </div>
+                <button
+                    onClick={handleBackClick}
+                    className="p-2 bg-blue-400 rounded-2xl">Voltar página anterior</button>
+
                 <section className="w-[95%]">
                     <input
-                    placeholder="Buscar Ordem de serviço" 
-                    className="w-full border rounded-2xl h-10 text-center text-[1.2rem] outline-none"
-                    type="search" name="search" id="search" />
+                        placeholder="Buscar Ordem de serviço"
+                        className="w-full border rounded-2xl h-10 text-center text-[1.2rem] outline-none"
+                        type="search" name="search" id="search" />
                 </section>
                 <ul className="w-full">
                     <li className="flex items-center gap-1">
