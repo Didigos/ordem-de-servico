@@ -13,9 +13,11 @@ const Orders = () => {
                     Ao entregar o aparelho, certifique-se de que todas as informações estão corretas
                     e que o cliente está ciente dos termos de entrega.
                 </div>
-                <button 
+                <button
                     onClick={handleBackClick}
-                    className="p-2 bg-blue-400 rounded-2xl">Voltar página anterior</button>
+                    className="p-2 bg-blue-400 rounded-2xl">
+                    Voltar página anterior
+                </button>
 
                 <section className="w-[95%]">
                     <input
