@@ -14,7 +14,7 @@ type TypeForm = {
 
 const ReceiveForm = () => {
 
-    const { register} = useForm<TypeForm>();
+    const { register, handleSubmit} = useForm<TypeForm>();
 
         const handleBackClick = () =>{
         window.history.back();
@@ -31,7 +31,9 @@ const ReceiveForm = () => {
                 className="p-2 bg-blue-400 rounded-2xl mt-5">Voltar página anterior</button>
             </header>
 
-            <form className="flex items-center justify-center flex-col gap-2 p-4 w-full">
+            <form 
+            onSubmit={handleS}
+            className="flex items-center justify-center flex-col gap-2 p-4 w-full">
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
                         className="text-[1.2rem] w-full ml-30"

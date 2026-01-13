@@ -11,7 +11,7 @@ const Orders = () => {
                 <h2 className="text-[1.5rem]">Entregar Aparelho</h2>
                 <div className="w-[90%] rounded-2xl border bg-red-400 text-white p-4">
                     Ao entregar o aparelho, certifique-se de que todas as informações estão corretas
-                    e que o cliente está ciente dos termos de entrega.
+                    e que o cliente está ciente dos termos de entrega a.
                 </div>
                 <button
                     onClick={handleBackClick}
