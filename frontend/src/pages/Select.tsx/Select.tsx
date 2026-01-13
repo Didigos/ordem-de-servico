@@ -11,7 +11,7 @@ const Select = () => {
 
     const handleDeliverDevice = (event: any) => {
         event.preventDefault();
-        console.log('redirecionar para a página de entregar aparelho');
+        navigate("/orders");
     }
 
 
