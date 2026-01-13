@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import Login from "../pages/Login/Login"
 import NotFound from "../pages/NotFound"
 import Select from "../pages/Select.tsx/Select"
-import ReceiveForm from "../components/receiveForm/receiveForm"
+import ReceiveForm from "../components/receiveForm/ReceiveForm"
 
 const AppRoutes = () => {
   return (
