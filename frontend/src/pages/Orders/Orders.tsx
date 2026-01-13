@@ -15,9 +15,9 @@ const Orders = () => {
                     type="search" name="search" id="search" />
                 </section>
                 <ul className="w-full">
-                    <li className="flex items-center gap-1 p-1">
+                    <li className="flex items-center gap-1">
                         <div className="flex bg-[#D9D9D9] flex-1 h-20 justify-between items-center p-2 rounded-2xl">
-                            <div className=" w-[60%] flex flex-col text-[0.8rem] p-1">
+                            <div className=" w-[65%] flex flex-col text-[0.8rem] p-1">
                                 <span className="font-bold text-[0.9rem]">OS: 12345</span>
                                 <span>Cliente: Diego Pires Gomes</span>
                                 <span>Telefone: (28) 98116-8141</span>
