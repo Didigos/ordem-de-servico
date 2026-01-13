@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const Select = () => {
+    const navigate = useNavigate();
+
 
     const handleReceiveDevice = (event: any) => {
         event.preventDefault();
-        console.log('redirecionar para a página de receber aparelho');
+        navigate("/select-receive");
     }
 
     const handleDeliverDevice = (event: any) => {
