@@ -8,7 +8,7 @@ type OrderData = {
     deviceModel: string;
     issueDescription: string;
     contractedServices: string;
-    totalValue: number;
+    totalValue: string;
     warrantyTime: string;
 }
 

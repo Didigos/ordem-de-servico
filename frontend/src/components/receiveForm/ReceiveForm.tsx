@@ -1,4 +1,5 @@
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { sendOrderData } from "../../services/orderService";
 
 type TypeForm = {
     client: string,
@@ -14,26 +15,48 @@ type TypeForm = {
 
 const ReceiveForm = () => {
 
-    const { register, handleSubmit} = useForm<TypeForm>();
+    const { register, handleSubmit } = useForm<TypeForm>();
 
-        const handleBackClick = () =>{
+    const handleBackClick = () => {
         window.history.back();
+    }
+
+    const handleOnSubmit = async (data: TypeForm) => {
+
+        const orderData = {
+            store: data.store,
+            clientName: data.client,
+            clientPhone: "",
+            deviceBrand: data.brand,
+            deviceModel: data.model,
+            issueDescription: data.reportedProblem,
+            contractedServices: data.performedServices,
+            totalValue: data.price,
+            warrantyTime: data.warrantyPeriod,
+        };
+
+        try {
+            const response = await sendOrderData(orderData);
+            console.log('Order data sent successfully:', response.data);
+        } catch (error) {
+            console.error('Error sending order data:', error);
         }
-    
+    }
+
 
     return (
         <main className="sm:w-screen sm:full p-4 flex flex-col items-center justify-center">
             <header className="w-full flex items-center justify-center p-4 flex-col">
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
-                <button 
-                onClick={handleBackClick}
-                className="p-2 bg-blue-400 rounded-2xl mt-5">Voltar página anterior</button>
+                <button
+                    onClick={handleBackClick}
+                    className="p-2 bg-blue-400 rounded-2xl mt-5">Voltar página anterior</button>
             </header>
 
-            <form 
-            onSubmit={handleS}
-            className="flex items-center justify-center flex-col gap-2 p-4 w-full">
+            <form
+                onSubmit={handleSubmit(handleOnSubmit)}
+                className="flex items-center justify-center flex-col gap-2 p-4 w-full">
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
                         className="text-[1.2rem] w-full ml-30"
@@ -45,6 +68,7 @@ const ReceiveForm = () => {
                          placeholder-gray-400 text-[0.9rem]"
                         type="text"
                         placeholder="Digite a loja ou funcionário..."
+                        required
                     />
                 </div>
                 <div className="flex items-center justify-center flex-col w-full">
@@ -120,7 +144,7 @@ const ReceiveForm = () => {
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                          placeholder-gray-400 text-[1.2rem]"
-                        type="number"
+                        type="text"
                         placeholder="Ex; R$ 300"
                     />
                 </div>
@@ -133,7 +157,7 @@ const ReceiveForm = () => {
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                          placeholder-gray-400 text-[1.2rem]"
-                        type="number"
+                        type="text"
                         placeholder="Ex; 90 dias"
                     />
                 </div>
