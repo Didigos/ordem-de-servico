@@ -12,6 +12,7 @@ type TypeForm = {
     warrantyPeriod: string,
     approvedService: string,
     checkable: string,
+    testedWhat: string,
     deviceChecklist?: string[],
 }
 
@@ -157,12 +158,13 @@ const ReceiveForm = () => {
                 className="text-[1.2rem] w-full ml-20"
                 htmlFor="problem">O que foi testado?</label>
                 <textarea
-                {...register("reportedProblem")}
+                {...register("testedWhat")}
+                
                 className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                 duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                     placeholder-gray-400 text-[1.2rem] resize-none"
                 placeholder="Descreva o problema relatado pelo cliente..."
-                name="reportedProblem" id="reportedProblem"></textarea>
+                name="testedWhat" id="testedWhat"></textarea>
                 </div>
                 </>)}
 
