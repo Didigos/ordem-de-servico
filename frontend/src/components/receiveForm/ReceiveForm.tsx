@@ -13,6 +13,8 @@ type TypeForm = {
     approvedService: string,
     checkable: string,
     testedWhat: string,
+    selectedBrand: string,
+    selectedCustomer: string,
     deviceChecklist?: string[],
 }
 
@@ -63,19 +65,29 @@ const ReceiveForm = () => {
             <form
                 onSubmit={handleSubmit(handleOnSubmit)}
                 className="flex items-center justify-center flex-col gap-2 p-4 w-full">
-                <div className="flex items-center justify-center flex-col w-full">
+                <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-30"
-                        htmlFor="client">Loja/Funcionario </label>
-                    <input
-                        {...register("store")}
+                        className="text-[1.2rem] w-full ml-10"
+                    >Funcionário</label>
+                    <select
+                        {...register("selectedCustomer")}
+                        id="selectedCustomer"
+                        defaultValue={""}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                         placeholder-gray-400 text-[0.9rem]"
-                        type="text"
-                        placeholder="Digite a loja ou funcionário..."
-                        required
-                    />
+                        placeholder-gray-400 text-[1.2rem]"
+                    >
+                        <option value="" disabled>Selecione</option>
+                        <option value="josiane">Josiane</option>
+                        <option value="diego">Diego</option>
+                        <option value="bruno">Bruno</option>
+                        <option value="carmem">Carmem</option>
+                        <option value="guilherme">Guilherme</option>
+                        <option value="rodrigo">Rodrigo</option>
+                        <option value="amanda">Amanda</option>
+                        <option value="deyse">Deyse</option>
+
+                    </select>
                 </div>
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
@@ -90,19 +102,34 @@ const ReceiveForm = () => {
                         placeholder="Digite o nome do cliente..."
                     />
                 </div>
-                <div className="flex items-center justify-center flex-col w-full">
+                <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-30"
-                        htmlFor="client">Marca </label>
-                    <input
-                        {...register("brand")}
+                        className="text-[1.2rem] w-full ml-10"
+                    >Marca</label>
+                    <select
+                        {...register("selectedBrand")}
+                        id="selectedBrand"
+                        defaultValue={""}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
-                        duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                         placeholder-gray-400 text-[0.9rem]"
-                        type="text"
-                        placeholder="Digite a marca do aparelho"
-                    />
+                        duration-200 w-[90%] h-15 rounded-2xl p-2 shadow-sm focus:shadow-md bg-white
+                        placeholder-gray-400 text-[1.2rem]"
+                    >
+                        <option value="" disabled>Selecione</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Motorola">Motorola</option>
+                        <option value="Xiaomi">Xiaomi</option>
+                        <option value="LG">LG</option>
+                        <option value="Asus">Asus</option>
+                        <option value="Sony">Sony</option>
+                        <option value="Positivo">Positivo</option>
+                        <option value="TCL">TCL</option>
+                        <option value="Alcatel">Alcatel</option>
+                        <option value="Philco">Philco</option>
+
+                    </select>
                 </div>
+
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
                         className="text-[1.2rem] w-full ml-30"
@@ -200,7 +227,7 @@ const ReceiveForm = () => {
                     className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                     duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                     placeholder-gray-400 text-[1.2rem] resize-none"
-                    placeholder="Descreva os serviços executados..."
+                    placeholder="Descreva os serviços..."
                     name="performedServices" id="performedServices"></textarea>
                     </div>
 
@@ -215,20 +242,6 @@ const ReceiveForm = () => {
                     placeholder-gray-400 text-[1.2rem]"
                     type="text"
                     placeholder="Ex; R$ 300"
-                    />
-                    </div>
-
-                    <div className="flex items-center justify-center flex-col w-full p-4">
-                    <label
-                    className="text-[1.2rem] w-full ml-20"
-                    htmlFor="client">Tempo de garantia </label>
-                    <input
-                    {...register("warrantyPeriod")}
-                    className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
-                    duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                    placeholder-gray-400 text-[1.2rem]"
-                    type="text"
-                    placeholder="Ex; 90 dias"
                     />
                     </div>
                     </>
