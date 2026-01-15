@@ -26,8 +26,6 @@ const ReceiveForm = () => {
     const checkable = watch("checkable");
 
     const handleOnSubmit = async (data: TypeForm) => {
-         alert('Ordem registrada com sucesso!');
-         window.history.back();
         const orderData = {
             store: data.store,
             clientName: data.client,
@@ -53,6 +51,9 @@ const ReceiveForm = () => {
         }
     }
 
+    const handleBackClick = () => {
+        window.history.back();
+    }
 
 
     return (
@@ -61,6 +62,11 @@ const ReceiveForm = () => {
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
             </header>
+                <button
+                    onClick={handleBackClick}
+                    className="p-2 bg-blue-400 rounded-2xl">
+                    Voltar página anterior
+                </button>
 
             <form
                 onSubmit={handleSubmit(handleOnSubmit)}
