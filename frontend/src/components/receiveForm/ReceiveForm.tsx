@@ -41,8 +41,8 @@ const ReceiveForm = () => {
         try {
             const response = await sendOrderData(orderData);
             if (response.status === 201) {
-                alert('Ordem registrada com sucesso!');
-                window.history.back();
+                console.log('Ordem registrada com sucesso:', response.data);
+                // window.history.back();
             } else {
                 alert('Falha ao registrar a ordem. Tente novamente.');
             }
@@ -92,6 +92,7 @@ const ReceiveForm = () => {
                         <option value="rodrigo">Rodrigo</option>
                         <option value="amanda">Amanda</option>
                         <option value="deyse">Deyse</option>
+                        <option value="claudia">Claudia</option>
 
                     </select>
                 </div>
