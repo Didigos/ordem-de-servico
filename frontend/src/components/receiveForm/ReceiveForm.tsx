@@ -23,7 +23,8 @@ const ReceiveForm = () => {
     const checkable = watch("checkable");
 
     const handleOnSubmit = async (data: TypeForm) => {
-        console.log('problem: ', data.reportedProblem || 'N/A');
+         alert('Ordem registrada com sucesso!');
+         window.history.back();
         const orderData = {
             store: data.store,
             clientName: data.client,
@@ -48,6 +49,7 @@ const ReceiveForm = () => {
             console.error('Error sending order data:', error);
         }
     }
+
 
 
     return (
