@@ -10,19 +10,20 @@ type TypeForm = {
     performedServices: string,
     price: string,
     warrantyPeriod: string,
+    approvedService: string,
+    checkable: string,
+    deviceChecklist?: string[],
 }
 
 
 const ReceiveForm = () => {
 
-    const { register, handleSubmit } = useForm<TypeForm>();
-
-    const handleBackClick = () => {
-        window.history.back();
-    }
+    const { register, handleSubmit, watch } = useForm<TypeForm>();
+    const approvalService = watch("approvedService");
+    const checkable = watch("checkable");
 
     const handleOnSubmit = async (data: TypeForm) => {
-
+        console.log('problem: ', data.reportedProblem || 'N/A');
         const orderData = {
             store: data.store,
             clientName: data.client,
@@ -30,14 +31,19 @@ const ReceiveForm = () => {
             deviceBrand: data.brand,
             deviceModel: data.model,
             issueDescription: data.reportedProblem,
-            contractedServices: data.performedServices,
+            performedServices: data.performedServices,
             totalValue: data.price,
             warrantyTime: data.warrantyPeriod,
         };
 
         try {
             const response = await sendOrderData(orderData);
-            console.log('Order data sent successfully:', response.data);
+            if (response.status === 201) {
+                alert('Ordem registrada com sucesso!');
+                window.history.back();
+            } else {
+                alert('Falha ao registrar a ordem. Tente novamente.');
+            }
         } catch (error) {
             console.error('Error sending order data:', error);
         }
@@ -49,9 +55,6 @@ const ReceiveForm = () => {
             <header className="w-full flex items-center justify-center p-4 flex-col">
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
-                <button
-                    onClick={handleBackClick}
-                    className="p-2 bg-blue-400 rounded-2xl mt-5">Voltar página anterior</button>
             </header>
 
             <form
@@ -110,6 +113,9 @@ const ReceiveForm = () => {
                         placeholder="Digite o modelo do aparelho"
                     />
                 </div>
+                {/* separador */}
+                <div className="w-full h-1 border-b border-zinc-300 rounded-full"></div>
+
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
                         className="text-[1.2rem] w-full ml-20"
@@ -120,51 +126,116 @@ const ReceiveForm = () => {
                         duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                          placeholder-gray-400 text-[1.2rem] resize-none"
                         placeholder="Descreva o problema relatado pelo cliente..."
-                        name="problem" id="problem"></textarea>
+                        name="reportedProblem" id="reportedProblem"></textarea>
                 </div>
-                <div className="flex items-center justify-center flex-col w-full">
+                <div className="w-full h-1 border-b border-zinc-300 rounded-full"></div>
+                <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-20"
-                        htmlFor="problem">Serviços executados</label>
-                    <textarea
-                        {...register("performedServices")}
+                        className="text-[1.2rem] w-full ml-10"
+                    >É possível fazer testes?</label>
+                    <select
+                        {...register("checkable")}
+                        id="checkable"
+                        defaultValue={""}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
-                        duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                         placeholder-gray-400 text-[1.2rem] resize-none"
-                        placeholder="Descreva os serviços executados..."
-                        name="problem" id="problem"></textarea>
+                        duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
+                        placeholder-gray-400 text-[1.2rem]"
+                    >
+                        <option value="" disabled>Selecione</option>
+                        <option value="yes">Sim</option>
+                        <option value="no">Não</option>
+
+                    </select>
                 </div>
 
-                <div className="flex items-center justify-center flex-col w-full">
+                {checkable === "yes" && (
+                <>
+                <div className="flex items-center justify-center flex-col w-full p-1">
+                <label
+                className="text-[1.2rem] w-full ml-20"
+                htmlFor="problem">O que foi testado?</label>
+                <textarea
+                {...register("reportedProblem")}
+                className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
+                duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
+                    placeholder-gray-400 text-[1.2rem] resize-none"
+                placeholder="Descreva o problema relatado pelo cliente..."
+                name="reportedProblem" id="reportedProblem"></textarea>
+                </div>
+                </>)}
+
+                {/* separador */}
+                <div className="w-full h-1 border-b border-zinc-300 rounded-full"></div>
+
+                <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-20"
-                        htmlFor="client">Valor </label>
-                    <input
-                        {...register("price")}
+                        className="text-[1.2rem] w-full ml-10"
+                    >Cliente pré aprovou serviço?</label>
+                    <select
+                        {...register("approvedService")}
+                        id="approvedService"
+                        defaultValue={""}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                         placeholder-gray-400 text-[1.2rem]"
-                        type="text"
-                        placeholder="Ex; R$ 300"
-                    />
+                        placeholder-gray-400 text-[1.2rem]"
+                    >
+                        <option value="" disabled>Selecione</option>
+                        <option value="yes">Sim</option>
+                        <option value="no">Não</option>
+
+                    </select>
                 </div>
-                <div className="flex items-center justify-center flex-col w-full p-4">
+                {approvalService === "yes" && (
+                    <>
+                    <div className="flex items-center justify-center flex-col w-full">
                     <label
-                        className="text-[1.2rem] w-full ml-20"
-                        htmlFor="client">Tempo de garantia </label>
+                    className="text-[1.2rem] w-full ml-20"
+                    htmlFor="problem">Serviços</label>
+                    <textarea
+                    {...register("performedServices")}
+                    className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
+                    duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
+                    placeholder-gray-400 text-[1.2rem] resize-none"
+                    placeholder="Descreva os serviços executados..."
+                    name="performedServices" id="performedServices"></textarea>
+                    </div>
+
+                    <div className="flex items-center justify-center flex-col w-full">
+                    <label
+                    className="text-[1.2rem] w-full ml-20"
+                    htmlFor="client">Valor </label>
                     <input
-                        {...register("warrantyPeriod")}
-                        className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
-                        duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
-                         placeholder-gray-400 text-[1.2rem]"
-                        type="text"
-                        placeholder="Ex; 90 dias"
+                    {...register("price")}
+                    className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
+                    duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
+                    placeholder-gray-400 text-[1.2rem]"
+                    type="text"
+                    placeholder="Ex; R$ 300"
                     />
-                </div>
+                    </div>
+
+                    <div className="flex items-center justify-center flex-col w-full p-4">
+                    <label
+                    className="text-[1.2rem] w-full ml-20"
+                    htmlFor="client">Tempo de garantia </label>
+                    <input
+                    {...register("warrantyPeriod")}
+                    className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
+                    duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
+                    placeholder-gray-400 text-[1.2rem]"
+                    type="text"
+                    placeholder="Ex; 90 dias"
+                    />
+                    </div>
+                    </>
+                )}
+
+
                 <button
                     className="w-full h-30 bg-green-500 hover:bg-green-600 transition-colors duration-200
-                     rounded-2xl text-white text-[1.2rem] font-bold mt-4"
-                    type="submit">Registrar e Imprimir</button>
+                    rounded-2xl text-white text-[1.2rem] font-bold mt-4"
+                    type="submit">Registrar e Imprimir
+                </button>
 
             </form>
         </main>

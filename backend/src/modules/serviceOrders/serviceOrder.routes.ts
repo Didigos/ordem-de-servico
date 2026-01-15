@@ -15,54 +15,58 @@ function isValidObjectId(id: string) {
  * cria OS (status padrão: MANUTENCAO)
  */
 serviceOrdersRoutes.post('/', async (req, res, next) => {
-  try {
-    const {
-      customerId,
-      brand,
-      model,
-      defectReported,
-      servicePerformed,
-      valueCents,
-      warrantyDays,
-      devicePasscode,
-    } = req.body
-
-    if (!customerId || !brand || !model || !defectReported || valueCents === undefined || !warrantyDays) {
-      return res.status(400).json({
-        message:
-          'Campos obrigatórios: customerId, brand, model, defectReported, valueCents, warrantyDays',
-      })
-    }
-
-    if (!isValidObjectId(String(customerId))) {
-      return res.status(400).json({ message: 'customerId inválido' })
-    }
-
-    const customerExists = await Customer.exists({ _id: customerId })
-    if (!customerExists) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
-    }
-
-    const orderNumber = await getNextOrderNumber()
-
-    const serviceOrder = await ServiceOrder.create({
-      orderNumber,
-      customerId,
-      brand: String(brand).trim(),
-      model: String(model).trim(),
-      defectReported: String(defectReported).trim(),
-      servicePerformed: servicePerformed ? String(servicePerformed).trim() : '',
-      valueCents: Number(valueCents),
-      warrantyDays: Number(warrantyDays),
-      devicePasscode: devicePasscode ? String(devicePasscode).trim() : '',
-      status: 'MANUTENCAO',
-      deliveredAt: null,
-    })
-
-    return res.status(201).json(serviceOrder)
-  } catch (err) {
-    return next(err)
+  if(req.body) {
+    console.log(req.body)
+    return res.status(201).json({ message: 'Ordem de serviço recebida com sucesso' })
   }
+  // try {
+  //   const {
+  //     customerId,
+  //     brand,
+  //     model,
+  //     defectReported,
+  //     servicePerformed,
+  //     valueCents,
+  //     warrantyDays,
+  //     devicePasscode,
+  //   } = req.body
+
+  //   if (!customerId || !brand || !model || !defectReported || valueCents === undefined || !warrantyDays) {
+  //     return res.status(400).json({
+  //       message:
+  //         'Campos obrigatórios: customerId, brand, model, defectReported, valueCents, warrantyDays',
+  //     })
+  //   }
+
+  //   if (!isValidObjectId(String(customerId))) {
+  //     return res.status(400).json({ message: 'customerId inválido' })
+  //   }
+
+  //   const customerExists = await Customer.exists({ _id: customerId })
+  //   if (!customerExists) {
+  //     return res.status(404).json({ message: 'Cliente não encontrado' })
+  //   }
+
+  //   const orderNumber = await getNextOrderNumber()
+
+  //   const serviceOrder = await ServiceOrder.create({
+  //     orderNumber,
+  //     customerId,
+  //     brand: String(brand).trim(),
+  //     model: String(model).trim(),
+  //     defectReported: String(defectReported).trim(),
+  //     servicePerformed: servicePerformed ? String(servicePerformed).trim() : '',
+  //     valueCents: Number(valueCents),
+  //     warrantyDays: Number(warrantyDays),
+  //     devicePasscode: devicePasscode ? String(devicePasscode).trim() : '',
+  //     status: 'MANUTENCAO',
+  //     deliveredAt: null,
+  //   })
+
+  //   return res.status(201).json(serviceOrder)
+  // } catch (err) {
+  //   return next(err)
+  // }
 })
 
 /**

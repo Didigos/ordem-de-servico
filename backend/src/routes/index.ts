@@ -6,6 +6,6 @@ const routes = Router()
 
 routes.get('/teste', (req, res) => res.json({ status: 'ok' }))
 routes.use('/customers', customersRoutes)
-routes.use('/service-orders', serviceOrdersRoutes)
+routes.use('/orders', serviceOrdersRoutes)
 
 export { routes }
