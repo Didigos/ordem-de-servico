@@ -30,6 +30,8 @@ customersRoutes.post('/', async (req, res, next) => {
 
 // ✅ READ ALL (com search opcional)
 customersRoutes.get('/', async (req, res, next) => {
+    const data = await Customer.find()
+    console.log(data)
   try {
     const search = String(req.query.search ?? '').trim()
 
@@ -61,7 +63,7 @@ customersRoutes.get('/:id/service-orders', async (req, res, next) => {
     // opcional: garante que o customer existe
     const customerExists = await Customer.exists({ _id: id })
     if (!customerExists) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
+      return res.status(404).json({ message: 'Cliente não encontrado cinco' })
     }
 
     const status = String(req.query.status ?? '').trim() // MANUTENCAO | ENTREGUE (opcional)
@@ -91,7 +93,7 @@ customersRoutes.get('/:id', async (req, res, next) => {
     const customer = await Customer.findById(id)
 
     if (!customer) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
+      return res.status(404).json({ message: 'Cliente não encontrado dois' })
     }
 
     return res.json(customer)
@@ -121,7 +123,7 @@ customersRoutes.put('/:id', async (req, res, next) => {
     })
 
     if (!customer) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
+      return res.status(404).json({ message: 'Cliente não encontrado tres' })
     }
 
     return res.json(customer)
@@ -142,7 +144,7 @@ customersRoutes.delete('/:id', async (req, res, next) => {
     const customer = await Customer.findByIdAndDelete(id)
 
     if (!customer) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
+      return res.status(404).json({ message: 'Cliente não encontrado quatro' })
     }
 
     return res.status(204).send()

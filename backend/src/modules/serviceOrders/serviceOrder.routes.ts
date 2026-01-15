@@ -13,8 +13,9 @@ function isValidObjectId(id: string) {
 /**
  * POST /service-orders
  * cria OS (status padrão: MANUTENCAO)
- */
+ */ 
 serviceOrdersRoutes.post('/', async (req, res, next) => {
+
   try {
     const {
       customerId,
@@ -52,7 +53,7 @@ serviceOrdersRoutes.post('/', async (req, res, next) => {
       model: String(model).trim(),
       defectReported: String(defectReported).trim(),
       servicePerformed: servicePerformed ? String(servicePerformed).trim() : '',
-      valueCents: Number(valueCents),
+      valueCents: valueCents,
       warrantyDays: Number(warrantyDays),
       devicePasscode: devicePasscode ? String(devicePasscode).trim() : '',
       status: 'MANUTENCAO',
@@ -248,7 +249,7 @@ serviceOrdersRoutes.get('/:id/print', async (req, res, next) => {
       `Modelo: ${os.model}`,
       `Defeito: ${os.defectReported}`,
       `Servico: ${os.servicePerformed || '—'}`,
-      `Valor: ${money(os.valueCents)}`,
+      `Valor: ${money(Number(os.valueCents))}`,
       `Garantia: ${warrantyText}`,
       '------------------------',
       `Entrada: ${os.createdAt.toISOString().slice(0, 10)}`,

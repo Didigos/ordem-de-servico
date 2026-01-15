@@ -38,14 +38,13 @@ const ServiceOrderSchema = new Schema(
     servicePerformed: { type: String, trim: true, default: '' },
 
     // valor em centavos
-    valueCents: { type: Number, required: true, min: 0 },
+    valueCents: { type: String, default: '0' },
 
     // garantia
     warrantyDays: {
       type: Number,
       enum: [30, 60, 90],
-      required: true,
-      default: 30,
+      default: 0,
     },
 
     // datas

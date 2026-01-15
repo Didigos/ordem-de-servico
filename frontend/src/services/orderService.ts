@@ -14,7 +14,8 @@ type OrderData = {
 
 export async function sendOrderData(orderData: OrderData) {
     try {
-    const response = await axios.post('http://localhost:3333/orders', orderData)
+    const response = await axios.post('http://localhost:3000/orders', orderData)
+    console.log('responsta do servidor: ', response.data);
     return response
     }
     catch (error) {
