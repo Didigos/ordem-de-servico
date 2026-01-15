@@ -57,7 +57,7 @@ const ReceiveForm = () => {
 
 
     return (
-        <main className="sm:w-screen sm:full p-4 flex flex-col items-center justify-center">
+        <main className="sm:w-[90vw] sm:full flex flex-col items-center justify-center">
             <header className="w-full flex items-center justify-center p-4 flex-col">
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
@@ -70,10 +70,10 @@ const ReceiveForm = () => {
 
             <form
                 onSubmit={handleSubmit(handleOnSubmit)}
-                className="flex items-center justify-center flex-col gap-2 p-4 w-full">
+                className="flex items-center justify-center flex-col gap-2 w-full">
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-10"
+                        className="text-[1.2rem] w-full pl-10"
                     >Funcionário</label>
                     <select
                         {...register("selectedCustomer")}
@@ -97,7 +97,7 @@ const ReceiveForm = () => {
                 </div>
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
-                        className="text-[1.2rem] w-full ml-30"
+                        className="text-[1.2rem] w-full  pl-10"
                         htmlFor="client">Cliente </label>
                     <input
                         {...register("client")}
@@ -110,7 +110,7 @@ const ReceiveForm = () => {
                 </div>
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-10"
+                        className="text-[1.2rem] w-full pl-10"
                     >Marca</label>
                     <select
                         {...register("selectedBrand")}
@@ -138,7 +138,7 @@ const ReceiveForm = () => {
 
                 <div className="flex items-center justify-center flex-col w-full">
                     <label
-                        className="text-[1.2rem] w-full ml-30"
+                        className="text-[1.2rem] w-full pl-10"
                         htmlFor="client">Modelo </label>
                     <input
                         {...register("model")}
@@ -154,7 +154,7 @@ const ReceiveForm = () => {
 
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-20"
+                        className="text-[1.2rem] w-full pl-10"
                         htmlFor="problem">Problema Relatado</label>
                     <textarea
                         {...register("reportedProblem")}
@@ -167,7 +167,7 @@ const ReceiveForm = () => {
                 <div className="w-full h-1 border-b border-zinc-300 rounded-full"></div>
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-10"
+                        className="text-[1.2rem] w-full pl-10"
                     >É possível fazer testes?</label>
                     <select
                         {...register("checkable")}
@@ -188,7 +188,7 @@ const ReceiveForm = () => {
                 <>
                 <div className="flex items-center justify-center flex-col w-full p-1">
                 <label
-                className="text-[1.2rem] w-full ml-20"
+                className="text-[1.2rem] w-full pl-10"
                 htmlFor="problem">O que foi testado?</label>
                 <textarea
                 {...register("testedWhat")}
@@ -206,7 +206,7 @@ const ReceiveForm = () => {
 
                 <div className="flex items-center justify-center flex-col w-full p-1">
                     <label
-                        className="text-[1.2rem] w-full ml-10"
+                        className="text-[1.2rem] w-full pl-10"
                     >Cliente pré aprovou serviço?</label>
                     <select
                         {...register("approvedService")}
@@ -226,7 +226,7 @@ const ReceiveForm = () => {
                     <>
                     <div className="flex items-center justify-center flex-col w-full">
                     <label
-                    className="text-[1.2rem] w-full ml-20"
+                    className="text-[1.2rem] w-full pl-10"
                     htmlFor="problem">Serviços</label>
                     <textarea
                     {...register("performedServices")}
@@ -239,7 +239,7 @@ const ReceiveForm = () => {
 
                     <div className="flex items-center justify-center flex-col w-full">
                     <label
-                    className="text-[1.2rem] w-full ml-20"
+                    className="text-[1.2rem] w-full ml-20  pl-10"
                     htmlFor="client">Valor </label>
                     <input
                     {...register("price")}
@@ -255,7 +255,7 @@ const ReceiveForm = () => {
 
 
                 <button
-                    className="w-full h-30 bg-green-500 hover:bg-green-600 transition-colors duration-200
+                    className="w-[65%] h-15 bg-green-500 hover:bg-green-600 transition-colors duration-200
                     rounded-2xl text-white text-[1.2rem] font-bold mt-4"
                     type="submit">Registrar e Imprimir
                 </button>
