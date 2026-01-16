@@ -1,21 +1,22 @@
 import { useForm } from "react-hook-form";
 import { sendOrderData } from "../../services/orderService";
+import Alert from '@mui/material/Alert';
+import { useState } from "react";
 
 type TypeForm = {
-    client: string,
-    brand: string,
+    warrantyDays?: number,
+    valueCents?: string,
+    customerId: string,
     model: string,
-    store: string,
-    reportedProblem: string,
-    performedServices: string,
-    price: string,
-    warrantyPeriod: string,
-    approvedService: string,
-    checkable: string,
-    testedWhat: string,
-    selectedBrand: string,
-    selectedCustomer: string,
+    defectReported: string,
+
+    performedServices?: string,
+    checkable?: string,
+    testedWhat?: string,
     deviceChecklist?: string[],
+    selectedBrand: string,
+    approvedService: string,
+    selectedCustomer: string,
 }
 
 
@@ -24,27 +25,30 @@ const ReceiveForm = () => {
     const { register, handleSubmit, watch } = useForm<TypeForm>();
     const approvalService = watch("approvedService");
     const checkable = watch("checkable");
+    const [alert, setAlert] = useState(false);
 
     const handleOnSubmit = async (data: TypeForm) => {
+        console.log('form data: ', data);
         const orderData = {
-            store: data.store,
-            clientName: data.client,
-            clientPhone: "",
-            deviceBrand: data.brand,
-            deviceModel: data.model,
-            issueDescription: data.reportedProblem,
-            performedServices: data.performedServices,
-            totalValue: data.price,
-            warrantyTime: data.warrantyPeriod,
+            customerId: data.customerId,
+            brand: data.selectedBrand,
+            model: data.model,
+            store: data.selectedCustomer,
+            defectReported: data.defectReported,
+            performedServices: data.performedServices || "N/A",
+            valueCents: data.valueCents ?? "N/A",
+            warrantyDays: data.warrantyDays ?? 0,
         };
 
         try {
             const response = await sendOrderData(orderData);
             if (response.status === 201) {
                 console.log('Ordem registrada com sucesso:', response.data);
-                // window.history.back();
+                setAlert(true);
+                setTimeout(() => setAlert(false), 3000);
+                window.history.back();
             } else {
-                alert('Falha ao registrar a ordem. Tente novamente.');
+                console.error('Falha ao registrar a ordem:', response);
             }
         } catch (error) {
             console.error('Error sending order data:', error);
@@ -57,7 +61,12 @@ const ReceiveForm = () => {
 
 
     return (
-        <main className="sm:w-[90vw] sm:full flex flex-col items-center justify-center">
+        <main className="sm:w-[90vw] sm:full flex flex-col items-center justify-center relative">
+            {alert && <Alert 
+            className={`fixed top-4 right-4 z-50 transition-transform duration-500 ${
+      alert ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+    }`}
+            severity="success">Ordem registrada com sucesso!</Alert>}
             <header className="w-full flex items-center justify-center p-4 flex-col">
                 <h2 className="text-[1.2rem] font-bold">Recebimento de Aparelho</h2>
                 <span className="text-[0.9rem]">Assistência Técnica</span>
@@ -101,7 +110,7 @@ const ReceiveForm = () => {
                         className="text-[1.2rem] w-full  pl-10"
                         htmlFor="client">Cliente </label>
                     <input
-                        {...register("client")}
+                        {...register("customerId")}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                          placeholder-gray-400 text-[0.9rem]"
@@ -158,7 +167,7 @@ const ReceiveForm = () => {
                         className="text-[1.2rem] w-full pl-10"
                         htmlFor="problem">Problema Relatado</label>
                     <textarea
-                        {...register("reportedProblem")}
+                        {...register("defectReported")}
                         className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                         duration-200 w-[90%] h-40 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                          placeholder-gray-400 text-[1.2rem] resize-none"
@@ -243,7 +252,7 @@ const ReceiveForm = () => {
                     className="text-[1.2rem] w-full ml-20  pl-10"
                     htmlFor="client">Valor </label>
                     <input
-                    {...register("price")}
+                    {...register("valueCents")}
                     className="outline-none border-2 border-[#05ABE2] focus:border-green-500 transition-colors 
                     duration-200 w-[90%] h-15 rounded-2xl p-4 shadow-sm focus:shadow-md bg-white
                     placeholder-gray-400 text-[1.2rem]"

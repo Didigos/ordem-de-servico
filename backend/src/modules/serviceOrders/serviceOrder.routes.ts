@@ -13,9 +13,9 @@ function isValidObjectId(id: string) {
 /**
  * POST /service-orders
  * cria OS (status padrão: MANUTENCAO)
- */ 
+ */
 serviceOrdersRoutes.post('/', async (req, res, next) => {
-
+  console.log('usuario: ', req.body.customerId)
   try {
     const {
       customerId,
@@ -26,23 +26,18 @@ serviceOrdersRoutes.post('/', async (req, res, next) => {
       valueCents,
       warrantyDays,
       devicePasscode,
+      store
     } = req.body
 
-    if (!customerId || !brand || !model || !defectReported || valueCents === undefined || !warrantyDays) {
-      return res.status(400).json({
-        message:
-          'Campos obrigatórios: customerId, brand, model, defectReported, valueCents, warrantyDays',
-      })
-    }
 
-    if (!isValidObjectId(String(customerId))) {
-      return res.status(400).json({ message: 'customerId inválido' })
-    }
+    // if (!isValidObjectId(String(customerId))) {
+    //   return res.status(400).json({ message: 'customerId inválido' })
+    // }
 
-    const customerExists = await Customer.exists({ _id: customerId })
-    if (!customerExists) {
-      return res.status(404).json({ message: 'Cliente não encontrado' })
-    }
+    // const customerExists = await Customer.exists({ _id: customerId })
+    // if (!customerExists) {
+    //   return res.status(404).json({ message: 'Cliente não encontrado' })
+    // }
 
     const orderNumber = await getNextOrderNumber()
 
@@ -58,6 +53,7 @@ serviceOrdersRoutes.post('/', async (req, res, next) => {
       devicePasscode: devicePasscode ? String(devicePasscode).trim() : '',
       status: 'MANUTENCAO',
       deliveredAt: null,
+      store: String(store).trim(),
     })
 
     return res.status(201).json(serviceOrder)

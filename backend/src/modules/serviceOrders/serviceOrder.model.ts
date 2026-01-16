@@ -15,7 +15,7 @@ const ServiceOrderSchema = new Schema(
 
     // relacionamento
     customerId: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Customer',
       required: true,
       index: true,
@@ -34,7 +34,7 @@ const ServiceOrderSchema = new Schema(
     model: { type: String, required: true, trim: true },
 
     // informações da OS
-    defectReported: { type: String, required: true, trim: true },
+    defectReported: { type: String, trim: true },
     servicePerformed: { type: String, trim: true, default: '' },
 
     // valor em centavos
@@ -43,7 +43,7 @@ const ServiceOrderSchema = new Schema(
     // garantia
     warrantyDays: {
       type: Number,
-      enum: [30, 60, 90],
+      enum: [0, 30, 60, 90],
       default: 0,
     },
 
