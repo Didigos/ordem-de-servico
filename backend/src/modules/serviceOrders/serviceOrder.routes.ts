@@ -71,24 +71,17 @@ serviceOrdersRoutes.post('/', async (req, res, next) => {
  */
 serviceOrdersRoutes.get('/', async (req, res, next) => {
   try {
-    const status = String(req.query.status ?? '').trim()
-    const customerId = String(req.query.customerId ?? '').trim()
-    const orderNumber = String(req.query.orderNumber ?? '').trim()
-
-    const filter: Record<string, any> = {}
-
-    if (status) filter.status = status
-    if (customerId) {
-      if (!isValidObjectId(customerId)) return res.status(400).json({ message: 'customerId inválido' })
-      filter.customerId = customerId
-    }
-    if (orderNumber) filter.orderNumber = Number(orderNumber)
-
-    const list = await ServiceOrder.find(filter)
-      .populate('customerId') // remove se não quiser trazer dados do customer
-      .sort({ createdAt: -1 })
-
-    return res.json(list)
+    const response = await ServiceOrder.aggregate([
+      {
+        $addFields: {
+          statusOrder: {
+            $cond: [{ $eq: ["$status", "MANUTENCAO"] }, 0, 1]
+          }
+        }
+      },
+      { $sort: { statusOrder: 1, createdAt: -1 } } // MANUTENCAO primeiro, depois ENTREGUE, mais recentes primeiro
+    ])
+    return res.status(200).json(response)
   } catch (err) {
     return next(err)
   }
