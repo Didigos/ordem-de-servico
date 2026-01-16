@@ -1,17 +1,16 @@
 import dotenv from "dotenv";
 import { app } from "./app";
-import {connectDB} from "./config/database";
+import { connectDB } from "./config/database";
+
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3333;
 
-// Connect to the database
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Servidor iniciado na porta: ${PORT}`);
+});
+
+// tenta conectar, mas não bloqueia o servidor
 connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Servidor iniciado na porta: ${PORT}`);
-      console.log(`http://localhost:${PORT}`);
-    });
-}) .catch((error) =>{
-  console.log('Erro ao conectar ao banco de dados:', error);
-})
+  .then(() => console.log("Banco conectado com sucesso ✅"))
+  .catch((error) => console.log("Erro ao conectar ao banco de dados:", error));
