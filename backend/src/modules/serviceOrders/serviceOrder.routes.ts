@@ -6,6 +6,11 @@ import { getNextOrderNumber } from './getNextOrderNumber'
 
 const serviceOrdersRoutes = Router()
 
+serviceOrdersRoutes.use((req, res, next) => {
+  if (mongoose.connection.readyState === 1) return next();
+  return res.status(503).json({ message: "Banco conectando. Tente novamente." });
+});
+
 function isValidObjectId(id: string) {
   return mongoose.Types.ObjectId.isValid(id)
 }
@@ -69,23 +74,22 @@ serviceOrdersRoutes.post('/', async (req, res, next) => {
  * - customerId=<ObjectId>
  * - orderNumber=<Number>
  */
-serviceOrdersRoutes.get('/', async (req, res, next) => {
+serviceOrdersRoutes.get("/", async (req, res, next) => {
   try {
     const response = await ServiceOrder.aggregate([
       {
         $addFields: {
-          statusOrder: {
-            $cond: [{ $eq: ["$status", "MANUTENCAO"] }, 0, 1]
-          }
+          statusOrder: { $cond: [{ $eq: ["$status", "MANUTENCAO"] }, 0, 1] }
         }
       },
-      { $sort: { statusOrder: 1, createdAt: -1 } } // MANUTENCAO primeiro, depois ENTREGUE, mais recentes primeiro
-    ])
-    return res.status(200).json(response)
+      { $sort: { statusOrder: 1, createdAt: -1 } }
+    ]);
+
+    return res.status(200).json(response);
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-})
+});
 
 /**
  * GET /service-orders/:id
