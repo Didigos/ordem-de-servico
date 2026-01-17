@@ -12,7 +12,7 @@ type OrderData = {
     warrantyDays: number;
 }
 
-export async function sendOrderData(orderData: OrderData) {
+export async function sendOrderData(orderData: OrderData) { 
     try {
     const response = await axios.post(`${API_URL}/orders`, orderData)
     console.log('resposta do servidor: ', response.data);
